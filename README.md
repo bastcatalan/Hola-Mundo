@@ -1,2 +1,2 @@
-# javascript-ejemplo
-Ejemplos de javascript para recordar y estudiar
+# Carpeta js
+Contiene ejemplos básicos de Javascipt
