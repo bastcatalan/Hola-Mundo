@@ -5,17 +5,50 @@
 var usuarios = [];
 
 var divUsuarios = document.getElementById("usuarios");
+var divJanet = document.getElementById("janet");
 
-fetch('https://jsonplaceholder.typicode.com/users')
+getUsuarios()
     .then(data => data.json())
     .then(users => {
-        usuarios = users;
-        console.log(usuarios);
+        listadoUsuarios(users.data);
 
-        usuarios.map((users, i) => {
-            let nombre = document.createElement("h3");
-            nombre.innerHTML = i + ". " + users.name + " - " + users.email;
-            divUsuarios.appendChild(nombre);
-            document.querySelector(".loading").style.display = 'none';
-        });
+        return getJanet();
+    })
+    .then(data => data.json())
+    .then(user => {
+        mostrarJanet(user.data);
     });
+
+function getUsuarios() {
+    return fetch('https://reqres.in/api/users');
+}
+
+function getJanet() {
+    return fetch('https://reqres.in/api/users/2');
+}
+
+function listadoUsuarios(usuarios) {
+    usuarios.map((users, i) => {
+        let nombre = document.createElement("h3");
+        nombre.innerHTML = i + ". " + users.first_name + " - " + users.email;
+        divUsuarios.appendChild(nombre);
+        document.querySelector(".loading").style.display = 'none';
+    });
+}
+
+function mostrarJanet(users) {
+    console.log(users);
+    let nombre = document.createElement('h4');
+    let avatar = document.createElement('img');
+
+    nombre.innerHTML = users.first_name + " - " + users.email;
+
+    avatar.src = users.avatar;
+    avatar.width = '100';
+
+    divJanet.appendChild(nombre);
+    divJanet.appendChild(avatar);
+
+    document.querySelector("#janet .loading").style.display = 'none';
+
+}
